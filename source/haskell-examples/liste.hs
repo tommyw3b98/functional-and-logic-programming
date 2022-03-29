@@ -135,3 +135,29 @@ dimezza [] = ([], [])
 dimezza [x] = ([x], [])
 dimezza (x1 : x2 : xs) = (x1 : xs1, x2 : xs2)
     where (xs1, xs2) = dimezza xs
+    
+
+{- Algoritmo di quicksort -}
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x : xs) = quicksort xs_left ++ [x] ++ quicksort xs_right
+    where
+        xs_left = [x' | x' <- xs, x' <= x]
+        xs_right = [x' | x' <- xs, x' > x]
+
+{- Una possibile alternativa consiste nell'usare la funzione filter -}
+
+quicksort' :: (Ord a) => [a] -> [a]
+quicksort' [] = []
+quicksort' (x : xs) = quicksort' xs_left ++ [x] ++ quicksort' xs_right
+    where
+        xs_left = filter (<= x) xs
+        xs_right = filter (> x) xs
+
+{-filter è una funzione standard, ma possiamo reimplementarla così -}
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' p (x: xs) | p x = x : filter' p xs
+                  | otherwise = filter' p xs
