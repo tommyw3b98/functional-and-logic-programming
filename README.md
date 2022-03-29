@@ -6,7 +6,7 @@ All the comments in the source files are in italian.
 
 Various functions and examples implemented in class.
 
-To use a module simply load it in ghci:
+To use a source file simply load it in ghci:
 
 `ghci`
 
