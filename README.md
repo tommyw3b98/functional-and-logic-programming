@@ -10,7 +10,7 @@ To use a source file simply load it in ghci:
 
 `ghci`
 
-`:load <relative/path/to/file>`
+`:load <relative/path/to/file.hs>`
 
 ## circonferenza.hs
 
@@ -23,21 +23,22 @@ Example of defining local and global variables in haskell.
 
 ## giorno.hs
 
-Example of defining a new datatype then defining a function using it.
+Example of defining a new datatype, then defining a function using it.
 
 ## Lista.hs
 
-Module that redefines various recursive functions to work with lists.
+- Module that redefines various recursive functions to work with lists.
+- Mergesort and quicksort implementations.
 
 ## AlberoBin.hs
 
 Module that defines the binary tree data structure and some functions to work with it.
 
-A binary tree is defined as empty or as a node which has at most two subtrees.
+A binary tree is defined as empty (Nil) or a node which has at most two subtrees.
 
 ### Example:
 
-To represent the following tree:
+To represent the following tree (N represents an empty subtree):
 
 ```
          38
@@ -57,7 +58,7 @@ we will type:
 
 Module that defines the directed graph data structure and some functions to work with it.
 
-This module uses some function from Lista.hs which has to be in the same directory to work.
+This module imports some functions from Lista.hs which has to be in the same directory to work.
 
 A graph is defined as an ordered pair where the first element is the list of nodes, and the second element is the list of directed edges.
 
