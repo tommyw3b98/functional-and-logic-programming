@@ -1,5 +1,14 @@
+# 2 Players Tic Tac Toe
+
+
 This is my first haskell program!
 
 It's a very simple 2 players cli tic tac toe game.
 
-You can  either load it into ghci to test the functions separately or compile it with `ghc 2PlayersTicTacToe.hs -o <executable file name>`.
+You can  either load it into ghci to test the functions separately or compile it with
+
+`ghc 2PlayersTicTacToe.hs -o <executable file name>`
+
+then run it with
+
+`./<executable file name>`
