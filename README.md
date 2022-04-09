@@ -21,6 +21,11 @@ Example of defining local and global variables in haskell.
 - Function definition in imperative and declarative ways.
 - Various examples of basic recursive functions.
 
+## esempi_2.hs
+
+- Reimplementation of fold and map functions.
+- Various functions on lists defined using fold.
+
 ## giorno.hs
 
 Example of defining a new datatype, then defining a function using it.
@@ -82,3 +87,9 @@ To represent the following graph:
 we will type:
 
 `([2, 5, 11, 7, 10, 3], [(5, 11), (11, 2), (7, 11), (11, 10), (3, 10)])`
+
+## QuicksortInterattivo.hs
+
+Example of a simple interactive program to show how to do input/output with haskell.
+
+Requires LIsta.hs in the same directory to work.
