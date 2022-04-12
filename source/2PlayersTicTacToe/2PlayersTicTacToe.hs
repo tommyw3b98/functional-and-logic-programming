@@ -1,4 +1,4 @@
-import Data.List
+import Data.List (intercalate)
 
 {- Definizioni di nuovi tipi -}
 
@@ -203,7 +203,8 @@ newGame = do
     putStrLn "\nPlay again? (y/n):"
     choice <- getLine
     if choice == ['y'] then main
-    else if choice == ['n'] then return ()
+    else if choice == ['n'] then do
+        putStrLn "\nBye Bye!"
     else do
         putStrLn "\nInvalid character, try again!"
         newGame
@@ -215,6 +216,4 @@ main = do
     renderBoard emptyBoard
     gameLoop emptyBoard X 
     {- Alla fine di una partita chiediamo all'utente se vuole giocare di nuovo -}
-    newGame
-    putStrLn "\nBye Bye!" 
-    
+    newGame 
