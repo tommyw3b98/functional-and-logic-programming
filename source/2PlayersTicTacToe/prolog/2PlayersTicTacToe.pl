@@ -59,15 +59,15 @@ showBoard([A, B, C, D, E, F, G, H, I]) :-
 % Validazione di una mossa inserita dall'utente 
 
 isValid(M) :-
-    M = A1;
-    M = A2;
-    M = A3;
-    M = B1;
-    M = B2;
-    M = B3;
-    M = C1;
-    M = C2;
-    M = C3.
+    M == 'a1';
+    M == 'a2';
+    M == 'a3';
+    M == 'b1';
+    M == 'b2';
+    M == 'b3';
+    M == 'c1';
+    M == 'c2';
+    M == 'c3'.
 
 % Controlla se la casella all'indice specificato è vuota
 
@@ -79,15 +79,15 @@ isEmpty(I, B) :-
 % Predicato per ottenere l'indice corrispondente ad una mossa
 
 getBoxIndex(M, I) :-
-    (M = A1, I is 1);
-    (M = A2, I is 2);
-    (M = A3, I is 3);
-    (M = B1, I is 4);
-    (M = B2, I is 5);
-    (M = B3, I is 6);
-    (M = C1, I is 7);
-    (M = C2, I is 8);
-    (M = C3, I is 9).
+    (M == 'a1', I is 1);
+    (M == 'a2', I is 2);
+    (M == 'a3', I is 3);
+    (M == 'b1', I is 4);
+    (M == 'b2', I is 5);
+    (M == 'b3', I is 6);
+    (M == 'c1', I is 7);
+    (M == 'c2', I is 8);
+    (M == 'c3', I is 9).
 
 /* Logica di gioco */
 
@@ -104,7 +104,7 @@ replaceAtIndex(I, E, [H|T], [H|R]) :-
 getMove(B, P, I) :- 
     player(P),
     o(P),
-    nl,write('Player O enter a move (A1 - C3): '),
+    nl,write('Player O enter a move (a1 - c3): '),
     read(M),
     isValid(M),
     getBoxIndex(M, I1),
@@ -113,7 +113,7 @@ getMove(B, P, I) :-
 getMove(B, P, I) :- 
     player(P),
     x(P),
-    nl,write('Player X enter a move (A1 - C3): '),
+    nl,write('Player X enter a move (a1 - c3): '),
     read(M),
     isValid(M),
     getBoxIndex(M, I1),
@@ -188,9 +188,9 @@ gameLoop(B, P) :-
 newGame :-
     nl,write('Play again? (y/n): '),
     read(C),
-    ((C = y,
+    ((C == 'y',
      main);
-    (C = n, 
+    (C == 'n', 
      nl,write('Bye, Bye!'))).
 newGame :-
     nl,write('Invalid character, try again!'),
