@@ -116,6 +116,7 @@ playMove board player i = xs ++ [player] ++ ys
 
 {- Funzione che prende una mossa dall'utente e restituisce l'indice di tabella corrispondente -}
 
+getMove :: [Box] -> Player -> IO Int
 getMove board currentPlayer = do
     putStrLn $ "\nPlayer " ++ show currentPlayer ++ " enter a move (A1 - C3): "
     move <- getLine
