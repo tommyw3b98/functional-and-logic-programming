@@ -1,13 +1,13 @@
 /* Predicati per rappresentare lo stato delle caselle */
 
-% Una casella è occupata da un giocatore se contiene una x oppure una o
+% Una casella e' occupata da un giocatore se contiene una x oppure una o
 
 x(B):- B = x.
 o(B):- B = o.
 
 player(B) :- x(B); o(B).
 
-% Una casella è piena se è occupata da un giocatore, in caso contrario è vuota
+% Una casella e' piena se e' occupata da un giocatore, in caso contrario e' vuota
 
 full(B)  :- player(B).
 
@@ -70,12 +70,12 @@ isValid(M) :-
     M == 'c2';
     M == 'c3'.
 
-% Controlla se la casella all'indice specificato è vuota
+% Controlla se la casella all'indice specificato e' vuota
 % I: indice di lista (1 - 9) 
 % B: lista che rappresenta la tabella di gioco corrente
 
 isEmpty(I, B) :- 
-    nth(I, B, E), % Successo se l'I-esimo elemento di B è uguale ad E
+    nth(I, B, E), % Successo se l'I-esimo elemento di B e' uguale ad E
     empty(E).
     
 % Predicato per ottenere l'indice corrispondente ad una mossa
@@ -96,7 +96,7 @@ getBoxIndex(M, I) :-
 % Sostituzione dell'N-esimo elemento di una lista con un nuovo elemento
 % Argomenti: indice, elemento da inserire, lista corrente, nuova lista
 % Caso base: sostitizione del primo elemento
-% Caso ricorsivo: se l'indice è maggiore di 1, si richiama il predicato sulle code delle liste con I diminuito di 1, fino a ricondursi al caso base
+% Caso ricorsivo: se l'indice e' maggiore di 1, si richiama il predicato sulle code delle liste con I diminuito di 1, fino a ricondursi al caso base
 
 replaceAtIndex(1, E, [_ | T], [E | T]).
 replaceAtIndex(I, E, [H | T], [H | R]) :-
@@ -129,7 +129,7 @@ getMove(B, P, I) :-
 nextPlayer(x, o).
 nextPlayer(o, x).
 
-% Controlla se è stata raggiunta una condizione di vittoria
+% Controlla se e' stata raggiunta una condizione di vittoria
 
 checkWin(B, P) :- 
     rowWin(B, P);
@@ -159,12 +159,12 @@ diagWin(B, P) :-
      B = [_, P, _, _, P, _, _, P, _];
      B = [_, _, P, _, P, _, P, _, _]).
 
-% Controlla se è stata raggiunta la condizione di parità (tutte le caselle occupate da un giocatore)
+% Controlla se e' stata raggiunta la condizione di parita' (tutte le caselle occupate da un giocatore)
 
 checkTie(B) :- maplist(player, B).
 
 % Predicato che controlla lo stato del gioco ad ogni turno comunicando all'utente un'eventuale vittoria o pareggio
-% Se non è riscontrata una condizione di fine partita, viene chiamato ricorsivamente gameLoop per iniziare un nuovo turno
+% Se non e' riscontrata una condizione di fine partita, viene chiamato ricorsivamente gameLoop per iniziare un nuovo turno
 
 % Controlla vittoria del giocatore x
 checkGameState(B, P) :-
@@ -176,7 +176,7 @@ checkGameState(B, P) :-
     checkWin(B, P),
     o(P),
     nl, write('Player O won!').
-% Controlla parità
+% Controlla parita'
 checkGameState(B, _) :-
     checkTie(B),
     nl, write('It\'s a tie!').
@@ -194,14 +194,14 @@ gameLoop(B, P) :-
     checkGameState(NB, P).       % Controlla il raggiungimento di una condizione di fine partita
 
 % Predicato per richedere all'utente se vuole giocare ancora una volta finita una partita
-% Viene invocato una volta raggiunta una condizione di fine partita (parità oppure vittoria)
+% Viene invocato una volta raggiunta una condizione di fine partita (parita' oppure vittoria)
 
 newGame :-
     nl, write('Play again? (y/n): '),
     read(C),
-    ((C == 'y', % Se il carattere letto è y, chiama ricorsivamente la funzione main
+    ((C == 'y', % Se il carattere letto e' y, chiama ricorsivamente la funzione main
      main);
-    (C == 'n',  % Altrimenti, se il carattere letto è n, termina
+    (C == 'n',  % Altrimenti, se il carattere letto e' n, termina
      nl, write('Bye, Bye!'))).
 newGame :-
     nl, write('Invalid character, try again!'),
@@ -210,7 +210,7 @@ newGame :-
 % Predicato main, da eseguire per lanciare il programma
 
 main :- 
-    nl, write('Welcome to tic tac toe, good luck and have fun!'), nl,nl,
+    nl, write('Welcome to tic tac toe, good luck and have fun!'), nl,
     showBoard([e,e,e,e,e,e,e,e,e]),   % Stampa la tabella vuota
     gameLoop([e,e,e,e,e,e,e,e,e], x), % Inizia il gioco con la tabella vuota e il giocatore x
     newGame.
