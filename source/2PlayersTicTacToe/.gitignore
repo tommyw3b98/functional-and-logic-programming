@@ -1,3 +1,6 @@
+*.pfd
+*.log
+*.aux
 *.o
 *.hi
 *.hie
