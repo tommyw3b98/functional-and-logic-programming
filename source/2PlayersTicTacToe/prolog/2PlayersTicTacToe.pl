@@ -10,6 +10,7 @@ player(B) :- x(B); o(B).
 % Una casella è piena se è occupata da un giocatore, in caso contrario è vuota
 
 full(B)  :- player(B).
+
 empty(B) :- \+(full(B)).
 
 /* Predicati per la visualizzazione dello stato della tabella */
@@ -27,9 +28,9 @@ showRow(X, Y, Z) :-
     write('|'),
     showBox(Y),
     write('|'),
-    showBox(Z),nl.
+    showBox(Z), nl.
 
-% Visualizzazione della riga separatrice
+% Visualizzazione della riga separatrice 
 
 showDividingLine :-
     write('   _____|_____|_____'), nl,
@@ -40,7 +41,7 @@ showDividingLine :-
 showColIndex :-
     write('     1     2     3'), nl, nl.
 
-% Visualizzazione della tabella
+% Visualizzazione dello stato della tabella corrente
 
 showBoard([A, B, C, D, E, F, G, H, I]) :-
     showColIndex,
@@ -53,10 +54,10 @@ showBoard([A, B, C, D, E, F, G, H, I]) :-
     write('C  '),
     showRow(G, H, I).
 
-/* Validazioni dell'input utente */
+/* Validazioni dell'input */
 
 
-% Validazione di una mossa inserita dall'utente 
+% Validazione di una mossa inserita dall'utente (a1 - c3)
 
 isValid(M) :-
     M == 'a1';
@@ -70,10 +71,11 @@ isValid(M) :-
     M == 'c3'.
 
 % Controlla se la casella all'indice specificato è vuota
+% I: indice di lista (1 - 9) 
+% B: lista che rappresenta la tabella di gioco corrente
 
 isEmpty(I, B) :- 
-    % nth numera gli elementi da 1 in su
-    nth(I, B, E),
+    nth(I, B, E), % Successo se l'I-esimo elemento di B è uguale ad E
     empty(E).
     
 % Predicato per ottenere l'indice corrispondente ad una mossa
@@ -91,37 +93,35 @@ getBoxIndex(M, I) :-
 
 /* Logica di gioco */
 
-% Sostituzione dell'N-esimo elemento di una lista, argomenti: indice, elemento da inserire, lista originale, nuova lista
+% Sostituzione dell'N-esimo elemento di una lista con un nuovo elemento
+% Argomenti: indice, elemento da inserire, lista corrente, nuova lista
+% Caso base: sostitizione del primo elemento
+% Caso ricorsivo: se l'indice è maggiore di 1, si richiama il predicato sulle code delle liste con I diminuito di 1, fino a ricondursi al caso base
 
-replaceAtIndex(1, E, [_|T], [E|T]).
-replaceAtIndex(I, E, [H|T], [H|R]) :-
+replaceAtIndex(1, E, [_ | T], [E | T]).
+replaceAtIndex(I, E, [H | T], [H | R]) :-
     I > 1, 
     INew is I - 1, 
     replaceAtIndex(INew, E, T, R).
 
 % Predicato per ottenere una mossa dall'utente e conoscere l'indice corrispondente
+% B: lista che rappresenta la tabella di gioco corrente
+% P: giocatore attivo nel turno corrente (x oppure o)
 
 getMove(B, P, I) :- 
     player(P),
-    o(P),
-    nl,write('Player O enter a move (a1 - c3): '),
-    read(M),
-    isValid(M),
-    getBoxIndex(M, I1),
-    isEmpty(I1, B),
-    I is I1.
-getMove(B, P, I) :- 
-    player(P),
-    x(P),
-    nl,write('Player X enter a move (a1 - c3): '),
-    read(M),
-    isValid(M),
-    getBoxIndex(M, I1),
-    isEmpty(I1, B),
+    ((x(P),             % Turno del giocatore X
+    nl, write('Player X enter a move (a1 - c3): '));
+    (o(P),              % Turno del giocatore O
+    nl, write('Player O enter a move (a1 - c3): '))),
+    read(M),    
+    isValid(M),         % Controlla che la mossa inserita sia valida 
+    getBoxIndex(M, I1), % Ottiene il corrispondente indice di lista
+    isEmpty(I1, B),     % Controlla che la casella corrispondente sia vuota
     I is I1.
 getMove(B, P, I) :-
     player(P),
-    nl,write('Invalid move, try again!'),nl,
+    nl, write('Invalid move, try again!'),nl,
     getMove(B, P, I).
 
 % Predicato per gestire l'alternanza dei turni
@@ -129,48 +129,58 @@ getMove(B, P, I) :-
 nextPlayer(x, o).
 nextPlayer(o, x).
 
-% Condizioni di vittoria
+% Controlla se è stata raggiunta una condizione di vittoria
 
 checkWin(B, P) :- 
     rowWin(B, P);
     colWin(B, P);
     diagWin(B, P).
 
+% Condizioni di vittoria
+
+% 3 simboli uguali allineati in riga
 rowWin(B, P) :-
     player(P), 
     (B = [P, P, P, _, _, _, _, _, _];
      B = [_, _, _, P, P, P, _, _, _];
      B = [_, _, _, _, _, _, P, P, P]).
 
+% 3 simboli uguali allineati in colonna
 colWin(B, P) :-
     player(P), 
     (B = [P, _, _, P, _, _, P, _, _];
      B = [_, P, _, _, P, _, _, P, _];
      B = [_, _, P, _, _, P, _, _, P]).
 
+% 3 simoli uguali allineati in diagonale 
 diagWin(B, P) :-
     player(P), 
     (B = [P, _, _, _, P, _, _, _, P];
      B = [_, P, _, _, P, _, _, P, _];
      B = [_, _, P, _, P, _, P, _, _]).
 
-% Condizione di parità (tutte le caselle occupate da un player)
+% Controlla se è stata raggiunta la condizione di parità (tutte le caselle occupate da un giocatore)
 
 checkTie(B) :- maplist(player, B).
 
-% Predicato che controlla lo stato del gioco comunicando all'utente un'eventuale vittoria o pareggio
+% Predicato che controlla lo stato del gioco ad ogni turno comunicando all'utente un'eventuale vittoria o pareggio
+% Se non è riscontrata una condizione di fine partita, viene chiamato ricorsivamente gameLoop per iniziare un nuovo turno
 
+% Controlla vittoria del giocatore x
 checkGameState(B, P) :-
     checkWin(B, P),
     x(P),
-    nl,write('Player X won!').
+    nl, write('Player X won!').
+% Controlla vittoria del giocatore o
 checkGameState(B, P) :-
     checkWin(B, P),
     o(P),
-    nl,write('Player O won!').
+    nl, write('Player O won!').
+% Controlla parità
 checkGameState(B, _) :-
     checkTie(B),
-    nl,write('It\'s a tie!').
+    nl, write('It\'s a tie!').
+% Se tutte le precedenti falliscono, continua con il prossimo turno
 checkGameState(B, P) :-
     nextPlayer(P, NP),
     gameLoop(B, NP).
@@ -178,28 +188,29 @@ checkGameState(B, P) :-
 % Predicato principale per la gestione della partita
 
 gameLoop(B, P) :-
-    getMove(B, P, I),
-    replaceAtIndex(I, P, B, NB),
-    showBoard(NB),
-    checkGameState(NB, P).
+    getMove(B, P, I),            % Acquisice una mossa da giocatore corrente
+    replaceAtIndex(I, P, B, NB), % Genera una nuova lista con la mossa inserita dal giocatore
+    showBoard(NB),               % Sostra la nuova tabella
+    checkGameState(NB, P).       % Controlla il raggiungimento di una condizione di fine partita
 
 % Predicato per richedere all'utente se vuole giocare ancora una volta finita una partita
+% Viene invocato una volta raggiunta una condizione di fine partita (parità oppure vittoria)
 
 newGame :-
-    nl,write('Play again? (y/n): '),
+    nl, write('Play again? (y/n): '),
     read(C),
-    ((C == 'y',
+    ((C == 'y', % Se il carattere letto è y, chiama ricorsivamente la funzione main
      main);
-    (C == 'n', 
-     nl,write('Bye, Bye!'))).
+    (C == 'n',  % Altrimenti, se il carattere letto è n, termina
+     nl, write('Bye, Bye!'))).
 newGame :-
-    nl,write('Invalid character, try again!'),
+    nl, write('Invalid character, try again!'),
     newGame.
 
 % Predicato main, da eseguire per lanciare il programma
 
 main :- 
-    nl,write('Welcome to tic tac toe, good luck and have fun!'),nl,
-    showBoard([e,e,e,e,e,e,e,e,e]),
-    gameLoop([e,e,e,e,e,e,e,e,e], x),
+    nl, write('Welcome to tic tac toe, good luck and have fun!'), nl,nl,
+    showBoard([e,e,e,e,e,e,e,e,e]),   % Stampa la tabella vuota
+    gameLoop([e,e,e,e,e,e,e,e,e], x), % Inizia il gioco con la tabella vuota e il giocatore x
     newGame.
