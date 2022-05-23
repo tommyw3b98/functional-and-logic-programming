@@ -36,6 +36,8 @@
 \begin{document}
 \maketitle
 \newpage
+\tableofcontents
+\newpage
  
 %specifica   
 \section{Specifica del Problema}
@@ -119,9 +121,382 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 \lstinputlisting[language=Prolog]{../prolog/2PlayersTicTacToe.pl}
 \newpage
 
-%testing
-\section{Testing del programma}
-\subsection{Testing dell'implementazione in Haskell}
-\subsection{Testing dell'implementazione in Prolog}
+%testing haskell
+\section{Testing dell'implementazione in Haskell}
+
+\subsection{Acquisizione corretta (mossa del giocatore X)}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    b2
+         1     2     3
+
+    A    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player O enter a move (A1 - C3): 
+    \end{spverbatim}
+
+\subsection{Acquisizione corretta (mossa del giocatore O)}
+    \begin{spverbatim}
+    Player O enter a move (A1 - C3): 
+    c1
+         1     2     3
+
+    A    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    O  |  -  |  -  
+
+    Player X enter a move (A1 - C3): 
+    \end{spverbatim}
+
+\subsection{Validazione dell'input (mossa inesistente)}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    A-1
+
+    Invalid move, try again!
+
+    Player X enter a move (A1 - C3): 
+    2,345
+
+    Invalid move, try again!
+
+    Player X enter a move (A1 - C3): 
+    \end{spverbatim}
+
+\subsection{Validazione dell'input (casella occupata)}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    a1
+         1     2     3
+
+    A    X  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    O  |  -  |  -  
+
+    Player O enter a move (A1 - C3): 
+    a1
+
+    Invalid move, try again!
+
+    Player O enter a move (A1 - C3): 
+    \end{spverbatim}
+
+\subsection{Vittoria del giocatore X}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    a3
+         1     2     3
+
+    A    X  |  X  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  O  
+       _____|_____|_____
+            |     |     
+    C    O  |  -  |  -  
+
+    Player X won!
+
+    Play again? (y/n):
+    \end{spverbatim}
+
+\subsection{Vittoria del giocatore O}
+    \begin{spverbatim}
+    Player O enter a move (A1 - C3): 
+    c1
+         1     2     3
+
+    A    X  |  -  |  O  
+       _____|_____|_____
+            |     |     
+    B    X  |  O  |  -  
+       _____|_____|_____
+            |     |     
+    C    O  |  X  |  -  
+
+    Player O won!
+
+    Play again? (y/n):
+    \end{spverbatim}
+
+\subsection{Pareggio}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    c3
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    X  |  O  |  O  
+       _____|_____|_____
+            |     |     
+    C    O  |  X  |  X  
+
+    It's a tie!
+
+    Play again? (y/n):
+    \end{spverbatim}
+
+\subsection{Vittoria con l'ultima casella}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    c3
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    C    O  |  X  |  X  
+
+    Player X won!
+
+    Play again? (y/n):
+    \end{spverbatim}
+
+\subsection{Inizio di nuova partita}
+    \begin{spverbatim}
+    Player X won!
+
+    Play again? (y/n):
+    y
+    Welcome to tic tac toe, good luck and have fun!
+
+         1     2     3
+
+    A    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player X enter a move (A1 - C3): 
+    \end{spverbatim}
+
+\subsection{Uscita dal programma}
+    \begin{spverbatim}
+    Player X enter a move (A1 - C3): 
+    c1
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  O  
+       _____|_____|_____
+            |     |     
+    C    X  |  -  |  -  
+
+    Player X won!
+
+    Play again? (y/n):
+    n
+    Bye Bye!
+    *Main> 
+    \end{spverbatim}
 \newpage
+
+
+%testing prolog
+\section{Testing dell'implementazione in Prolog}
+
+\subsection{Acquisizione corretta (mossa del giocatore X)}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): b2.
+         1     2     3
+
+    A    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player O enter a move (a1 - c3): 
+    \end{spverbatim}
+
+\subsection{Acquisizione corretta (mossa del giocatore O)}
+    \begin{spverbatim}
+    Player O enter a move (a1 - c3): a1.
+         1     2     3
+
+    A    O  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player X enter a move (a1 - c3): 
+    \end{spverbatim}
+
+\subsection{Validazione dell'input (mossa inesistente)}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): a32.
+
+    Invalid move, try again!
+
+    Player X enter a move (a1 - c3): 23451.  
+
+    Invalid move, try again!
+
+    Player X enter a move (a1 - c3): ciao.
+
+    Invalid move, try again!
+
+    Player X enter a move (a1 - c3): 
+    \end{spverbatim}
+
+\subsection{Validazione dell'input (casella occupata)}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): a2
+    .
+         1     2     3
+
+    A    O  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player O enter a move (a1 - c3): a2.
+
+    Invalid move, try again!
+
+    Player O enter a move (a1 - c3): 
+    \end{spverbatim}
+
+\subsection{Vittoria del giocatore X}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): c1.
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    X  |  -  |  O  
+
+    Player X won!
+    Play again? (y/n): 
+    \end{spverbatim}
+
+\subsection{Vittoria del giocatore O}
+    \begin{spverbatim}
+    Player O enter a move (a1 - c3): c1.
+         1     2     3
+
+    A    O  |  X  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  -  
+       _____|_____|_____
+            |     |     
+    C    O  |  -  |  -  
+
+    Player O won!
+    Play again? (y/n): 
+    \end{spverbatim}
+
+\subsection{Pareggio}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): c3.
+         1     2     3
+
+    A    X  |  X  |  O  
+       _____|_____|_____
+            |     |     
+    B    O  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    C    X  |  O  |  X  
+
+    It's a tie!
+    Play again? (y/n): 
+    \end{spverbatim}
+
+\subsection{Vittoria con l'ultima casella}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): c3.
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  O  
+       _____|_____|_____
+            |     |     
+    C    O  |  X  |  X  
+
+    Player X won!
+    Play again? (y/n): 
+    \end{spverbatim}
+
+\subsection{Inizio di nuova partita}
+    \begin{spverbatim}
+    Player X won!
+    Play again? (y/n): y.
+
+    Welcome to tic tac toe, good luck and have fun!
+         1     2     3
+
+    A    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    B    -  |  -  |  -  
+       _____|_____|_____
+            |     |     
+    C    -  |  -  |  -  
+
+    Player X enter a move (a1 - c3): 
+    \end{spverbatim}
+
+\subsection{Uscita dal programma}
+    \begin{spverbatim}
+    Player X enter a move (a1 - c3): c1.
+         1     2     3
+
+    A    X  |  O  |  X  
+       _____|_____|_____
+            |     |     
+    B    O  |  X  |  O  
+       _____|_____|_____
+            |     |     
+    C    X  |  -  |  -  
+
+    Player X won!
+    Play again? (y/n): n.
+
+    Bye, Bye!
+
+    true ? 
+
+    (1 ms) yes
+    | ?- 
+    \end{spverbatim}
 \end{document}
