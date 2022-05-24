@@ -4,13 +4,11 @@
 
 x(B):- B = x.
 o(B):- B = o.
-
 player(B) :- x(B); o(B).
 
 % Una casella e' piena se e' occupata da un giocatore, in caso contrario e' vuota
 
 full(B)  :- player(B).
-
 empty(B) :- \+(full(B)).
 
 /* Predicati per la visualizzazione dello stato della tabella */
@@ -39,7 +37,7 @@ showDividingLine :-
 % Visualizzazione degli indici di colonna
 
 showColIndex :-
-    write('     1     2     3'), nl, nl.
+    nl,write('     1     2     3'), nl, nl.
 
 % Visualizzazione dello stato della tabella corrente
 
@@ -56,20 +54,6 @@ showBoard([A, B, C, D, E, F, G, H, I]) :-
 
 /* Validazioni dell'input */
 
-
-% Validazione di una mossa inserita dall'utente (a1 - c3)
-
-isValid(M) :-
-    M == 'a1';
-    M == 'a2';
-    M == 'a3';
-    M == 'b1';
-    M == 'b2';
-    M == 'b3';
-    M == 'c1';
-    M == 'c2';
-    M == 'c3'.
-
 % Controlla se la casella all'indice specificato e' vuota
 % I: indice di lista (1 - 9) 
 % B: lista che rappresenta la tabella di gioco corrente
@@ -78,18 +62,17 @@ isEmpty(I, B) :-
     nth(I, B, E), % Successo se l'I-esimo elemento di B e' uguale ad E
     empty(E).
     
-% Predicato per ottenere l'indice corrispondente ad una mossa
+% Predicato per ottenere l'indice corrispondente ad una mossa inserita dall'utente
 
-getBoxIndex(M, I) :-
-    (M == 'a1', I is 1);
-    (M == 'a2', I is 2);
-    (M == 'a3', I is 3);
-    (M == 'b1', I is 4);
-    (M == 'b2', I is 5);
-    (M == 'b3', I is 6);
-    (M == 'c1', I is 7);
-    (M == 'c2', I is 8);
-    (M == 'c3', I is 9).
+getBoxIndex('a1', 1).
+getBoxIndex('a2', 2).
+getBoxIndex('a3', 3).
+getBoxIndex('b1', 4).
+getBoxIndex('b2', 5).
+getBoxIndex('b3', 6).
+getBoxIndex('c1', 7).
+getBoxIndex('c2', 8).
+getBoxIndex('c3', 9).
 
 /* Logica di gioco */
 
@@ -115,16 +98,15 @@ getMove(B, P, I) :-
     (o(P),              % Turno del giocatore O
     nl, write('Player O enter a move (a1 - c3): '))),
     read(M),    
-    isValid(M),         % Controlla che la mossa inserita sia valida 
     getBoxIndex(M, I1), % Ottiene il corrispondente indice di lista
     isEmpty(I1, B),     % Controlla che la casella corrispondente sia vuota
     I is I1.
 getMove(B, P, I) :-
     player(P),
-    nl, write('Invalid move, try again!'),nl,
+    nl, write('Invalid move, try again!'), nl,
     getMove(B, P, I).
 
-% Predicato per gestire l'alternanza dei turni
+% Predicato per gestire l'alternanza dei giocatori
 
 nextPlayer(x, o).
 nextPlayer(o, x).
@@ -211,6 +193,7 @@ newGame :-
 
 main :- 
     nl, write('Welcome to tic tac toe, good luck and have fun!'), nl,
+    write('Warning: input must be lowercase and end with a dot'), nl,
     showBoard([e,e,e,e,e,e,e,e,e]),   % Stampa la tabella vuota
     gameLoop([e,e,e,e,e,e,e,e,e], x), % Inizia il gioco con la tabella vuota e il giocatore x
     newGame.
