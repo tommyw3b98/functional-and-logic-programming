@@ -3,14 +3,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{spverbatim}
-\usepackage{listings}
+\usepackage{listingsutf8}
 \usepackage{color}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
-\lstset{frame=tb,
+\lstset
+{
     language=Haskell,
     language=Prolog,
     aboveskip=3mm,
@@ -25,7 +26,8 @@
     stringstyle=\color{mauve},
     breaklines=true,
     breakatwhitespace=true,
-    tabsize=3
+    tabsize=3,
+    inputencoding=utf8,
 }
 
 %pagina iniziale
@@ -114,11 +116,11 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
 \subsection{Implementazione in Haskell}
 
-\lstinputlisting[language=Haskell]{../haskell/2PlayersTicTacToe.hs}
+\lstinputlisting[language=Haskell]{../hs/TicTac.hs}
 \newpage
 \subsection{Implementazione in Prolog}
 
-\lstinputlisting[language=Prolog]{../prolog/2PlayersTicTacToe.pl}
+\lstinputlisting[language=Prolog]{../pl/TicTac.pl}
 \newpage
 
 %testing haskell
@@ -315,7 +317,6 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     \end{spverbatim}
 \newpage
 
-
 %testing prolog
 \section{Testing dell'implementazione in Prolog}
 
@@ -463,6 +464,8 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Play again? (y/n): y.
 
     Welcome to tic tac toe, good luck and have fun!
+    Warning: input must be lowercase and end with a period
+
          1     2     3
 
     A    -  |  -  |  -  
@@ -473,12 +476,13 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
             |     |     
     C    -  |  -  |  -  
 
-    Player X enter a move (a1 - c3): 
+    Player X enter a move (a1 - c3):
     \end{spverbatim}
 
 \subsection{Uscita dal programma}
     \begin{spverbatim}
     Player X enter a move (a1 - c3): c1.
+
          1     2     3
 
     A    X  |  O  |  X  
@@ -492,11 +496,11 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Player X won!
     Play again? (y/n): n.
 
-    Bye, Bye!
+    Bye Bye!
 
     true ? 
 
-    (1 ms) yes
+    (5 ms) yes
     | ?- 
     \end{spverbatim}
 \end{document}
