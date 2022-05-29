@@ -2,7 +2,7 @@
 \usepackage[italian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{spverbatim}
+\usepackage{verbatim}
 \usepackage{listingsutf8}
 \usepackage{color}
 
@@ -60,7 +60,7 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 \subsection{Relazioni intercorrenti tra i dati}
 
 \begin{itemize}
-    \item Lo stato della tabella è aggiornato ad ogni turno secondo la scelta del giocatore. Il nuovo stato sarà uguale a quello precedente con il simbolo del giocatore presente nella casella scelta.
+    \item Lo stato della tabella è aggiornato ad ogni turno a seconda della scelta del giocatore. Il nuovo stato sarà uguale a quello precedente con il simbolo del giocatore presente nella casella scelta.
     \item La fine di una partita è determinata dal raggiungimento di una condizione di vittoria oppure di pareggio.
     \item La condizione di vittoria è raggiunta nel momento in cui sulla tabella sono presenti tre simboli identici sulla stessa riga, colonna o diagonale.
     \item La condizione di pareggio è raggiunta nel momento in cui non sono più presenti caselle libere e non è stata raggiunta una condizione di vittoria.
@@ -73,8 +73,8 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 \subsection{Scelte di progetto}
 
 \begin{itemize}
-    \item Per rappresentare la tabella di gioco si utilizzerà il tipo di dato lista, i cui elementi rappresenteranno le nove caselle a partire dalla prima riga.
-    \item La lista sarà inizialmente costituita da elementi segnaposto, i quali rappresentano una casella libera; alla fine di ogni turno sarà generata una nuova lista con il segnaposto corrispondente alla casella scelta sostituito dal simbolo del giocatore cha ha appena effettuato una mossa.
+    \item Per rappresentare la tabella di gioco si utilizzerà il tipo di dato lista, i cui elementi rappresenteranno le nove caselle ordinate a partire dalla prima riga procedendo da sinistra verso destra.
+    \item La lista sarà inizialmente costituita da elementi "segnaposto", i quali rappresentano una casella libera; alla fine di ogni turno sarà generata una nuova lista con il "segnaposto" corrispondente alla casella scelta sostituito dal simbolo del giocatore cha ha appena effettuato una mossa.
     \item Per consentire la scelta di una casella, le righe della tabella saranno indicizzate da una lettera (A, B, C) e le colonne da un numero (1, 2, 3); una mossa valida sarà rappresentata dagli indici di riga e di colonna di una casella libera (esempio: A2).
     \item Al termine di ogni partita, sarà data la possibilità ai giocatori di iniziarne una nuova senza dover riavviare il programma.
 \end{itemize}
@@ -89,23 +89,23 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     \end{itemize}
     \item Aggiornare lo stato della tabella:
     \begin{itemize}
-        \item Generare una nuova lista sostituendo il segnaposto corrispondente alla casella scelta con il simbolo del giocatore corrente.
+        \item Generare una nuova lista sostituendo il "segnaposto" corrispondente alla casella scelta con il simbolo del giocatore corrente.
     \end{itemize}
     \item Controllare il raggiungimento di una condizione di vittoria:
      \begin{itemize}
         \item Controllare ogni trio di elementi della lista che costituisce una riga, colonna, o diagonale sulla tabella.
-        \item Se è presente un trio di elementi identici (diversi dal segnaposto), il giocatore ha vinto.
+        \item Se è presente un trio di elementi identici (diversi dal "segnaposto"), il giocatore ha vinto.
     \end{itemize}
     \item Se non è stata raggiunta una condizione di vittoria, controllare il raggiungimento di una condizione di pareggio:
     \begin{itemize}
-        \item Controllare che la lista non contenga elementi segnaposto.
+        \item Controllare che la lista non contenga elementi "segnaposto".
     \end{itemize}
     \item Visualizzare la tabella aggiornata.
     \item Se non è stata raggiunta una condizione di fine partita, acquisire la mossa del giocatore successivo (punto 1).
     \item Se è stata raggiunta una condizione di fine partita, visualizzare il messaggio adatto.
     \item Chiedere all'utente se vuole giocare di nuovo:
     \begin{itemize}
-        \item Se la risposta è affermativa, rigenerare la lista iniziale e continuare l'esecuzione dal punto 1.
+        \item Se la risposta è affermativa, rigenerare la lista iniziale e continuare l'esecuzione dal primo punto.
         \item In caso contrario, terminare l'esecuzione.
     \end{itemize}
 \end{enumerate}
@@ -116,18 +116,18 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
 \subsection{Implementazione in Haskell}
 
-\lstinputlisting[language=Haskell]{../hs/TicTac.hs}
+\lstinputlisting[language=Haskell]{../haskell/2PlayersTicTacToe.hs}
 \newpage
 \subsection{Implementazione in Prolog}
 
-\lstinputlisting[language=Prolog]{../pl/TicTac.pl}
+\lstinputlisting[language=Prolog]{../prolog/2PlayersTicTacToe.pl}
 \newpage
 
 %testing haskell
 \section{Testing dell'implementazione in Haskell}
 
 \subsection{Acquisizione corretta (mossa del giocatore X)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     b2
          1     2     3
@@ -141,10 +141,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    -  |  -  |  -  
 
     Player O enter a move (A1 - C3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Acquisizione corretta (mossa del giocatore O)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player O enter a move (A1 - C3): 
     c1
          1     2     3
@@ -158,10 +158,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    O  |  -  |  -  
 
     Player X enter a move (A1 - C3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Validazione dell'input (mossa inesistente)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     A-1
 
@@ -173,10 +173,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Invalid move, try again!
 
     Player X enter a move (A1 - C3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Validazione dell'input (casella occupata)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     a1
          1     2     3
@@ -195,10 +195,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Invalid move, try again!
 
     Player O enter a move (A1 - C3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria del giocatore X}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     a3
          1     2     3
@@ -214,10 +214,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Player X won!
 
     Play again? (y/n):
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria del giocatore O}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player O enter a move (A1 - C3): 
     c1
          1     2     3
@@ -233,10 +233,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Player O won!
 
     Play again? (y/n):
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Pareggio}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     c3
          1     2     3
@@ -252,10 +252,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     It's a tie!
 
     Play again? (y/n):
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria con l'ultima casella}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     c3
          1     2     3
@@ -271,10 +271,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Player X won!
 
     Play again? (y/n):
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Inizio di nuova partita}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X won!
 
     Play again? (y/n):
@@ -292,10 +292,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    -  |  -  |  -  
 
     Player X enter a move (A1 - C3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Uscita dal programma}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (A1 - C3): 
     c1
          1     2     3
@@ -314,14 +314,14 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     n
     Bye Bye!
     *Main> 
-    \end{spverbatim}
+    \end{verbatim}
 \newpage
 
 %testing prolog
 \section{Testing dell'implementazione in Prolog}
 
 \subsection{Acquisizione corretta (mossa del giocatore X)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): b2.
          1     2     3
 
@@ -334,10 +334,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    -  |  -  |  -  
 
     Player O enter a move (a1 - c3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Acquisizione corretta (mossa del giocatore O)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player O enter a move (a1 - c3): a1.
          1     2     3
 
@@ -350,10 +350,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    -  |  -  |  -  
 
     Player X enter a move (a1 - c3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Validazione dell'input (mossa inesistente)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): a32.
 
     Invalid move, try again!
@@ -367,10 +367,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Invalid move, try again!
 
     Player X enter a move (a1 - c3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Validazione dell'input (casella occupata)}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): a2
     .
          1     2     3
@@ -388,10 +388,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     Invalid move, try again!
 
     Player O enter a move (a1 - c3): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria del giocatore X}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): c1.
          1     2     3
 
@@ -405,10 +405,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
     Player X won!
     Play again? (y/n): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria del giocatore O}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player O enter a move (a1 - c3): c1.
          1     2     3
 
@@ -422,10 +422,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
     Player O won!
     Play again? (y/n): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Pareggio}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): c3.
          1     2     3
 
@@ -439,10 +439,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
     It's a tie!
     Play again? (y/n): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Vittoria con l'ultima casella}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): c3.
          1     2     3
 
@@ -456,10 +456,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
     Player X won!
     Play again? (y/n): 
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Inizio di nuova partita}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X won!
     Play again? (y/n): y.
 
@@ -477,10 +477,10 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
     C    -  |  -  |  -  
 
     Player X enter a move (a1 - c3):
-    \end{spverbatim}
+    \end{verbatim}
 
 \subsection{Uscita dal programma}
-    \begin{spverbatim}
+    \begin{verbatim}
     Player X enter a move (a1 - c3): c1.
 
          1     2     3
@@ -502,5 +502,5 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
     (5 ms) yes
     | ?- 
-    \end{spverbatim}
+    \end{verbatim}
 \end{document}

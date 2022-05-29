@@ -23,7 +23,7 @@ instance Show Box where
     show (Full X) = "  X  "
     show (Full O) = "  O  " 
 
-{- definizione di funzioni-}
+{- definizione di funzioni -}
 
 -- restituisce la tabella vuota, utilizzata all'inizio di una partita
 
