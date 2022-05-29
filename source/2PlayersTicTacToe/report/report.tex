@@ -371,23 +371,20 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 
 \subsection{Validazione dell'input (casella occupata)}
     \begin{verbatim}
-    Player X enter a move (a1 - c3): a2
-    .
-         1     2     3
+Player X enter a move (a1 - c3): a1.
+     1     2     3
 
-    A    O  |  X  |  -  
-       _____|_____|_____
-            |     |     
-    B    -  |  X  |  -  
-       _____|_____|_____
-            |     |     
-    C    -  |  -  |  -  
+A    X  |  -  |  -  
+   _____|_____|_____
+        |     |     
+B    -  |  -  |  -  
+   _____|_____|_____
+        |     |     
+C    -  |  -  |  -  
 
-    Player O enter a move (a1 - c3): a2.
+Player O enter a move (a1 - c3): a1.
 
-    Invalid move, try again!
-
-    Player O enter a move (a1 - c3): 
+Invalid move, try again!
     \end{verbatim}
 
 \subsection{Vittoria del giocatore X}
@@ -482,7 +479,6 @@ Ad ogni turno di gioco, i dati in uscita sono rappresentati dallo stato della ta
 \subsection{Uscita dal programma}
     \begin{verbatim}
     Player X enter a move (a1 - c3): c1.
-
          1     2     3
 
     A    X  |  O  |  X  
