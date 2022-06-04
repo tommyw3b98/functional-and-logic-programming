@@ -13,3 +13,15 @@ listaMassimi = map massimo
 -- alternativamente possiamo usare la funzione built-in maximum
 listaMassimi' :: (Num a, Ord a) => [(a,a)] -> [a]
 listaMassimi' = map maximum
+
+-- senza usare la funzione map
+listaMassimiRic :: (Num a, Ord a) => [(a,a)] -> [a]
+listaMassimiRic [] = []
+listaMassimiRic (x:xs) = [massimo x] ++ listaMassimiRic xs
+
+-- solo ricorsione
+listaMassimiRic' :: (Num a, Ord a) => [(a,a)] -> [a]
+listaMassimiRic' [] = []
+listaMassimiRic' ((x,y):pairs) 
+    | x >= y = [x] ++ listaMassimiRic' pairs
+    | otherwise = [y] ++ listaMassimiRic' pairs
