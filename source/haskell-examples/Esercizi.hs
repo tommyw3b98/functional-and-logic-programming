@@ -2,7 +2,7 @@
 
 -- trova il massimo di una coppia di numeri
 massimo :: (Num a, Ord a) => (a,a) -> a
-massimo (x, y) 
+massimo (x, y)
     | x >= y = x
     | otherwise = y
 
@@ -25,3 +25,9 @@ listaMassimiRic' [] = []
 listaMassimiRic' ((x,y):pairs) 
     | x >= y = x : listaMassimiRic' pairs
     | otherwise = y : listaMassimiRic' pairs
+
+{- Esercizio 2 -}
+
+-- NB: la typeclass fractional serve per divisioni su numeri reali
+average :: (Fractional a) => [a] -> a
+average xs = sum xs / fromIntegral (length xs)
