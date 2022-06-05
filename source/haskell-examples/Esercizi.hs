@@ -36,14 +36,17 @@ average xs = sum xs / fromIntegral (length xs)
 
 {- Esercizio 3 -}
 
--- dividi per 400, se resto 0 è bisestile
--- altrimenti dividi per 4 e dividi per 100, se entrambe 0 è bisestile
+-- dividi anno per 400, se resto 0 è bisestile
+-- altrimenti dividi anno per 4 e dividi per 100, se entrambe resto 0 è bisestile
+-- altrimenti non è bisestile
 
+-- stabilisce se un anno non è bisestile
 nonBisestile :: Int -> Bool
 nonBisestile x 
     | mod x 400 == 0 = False
-    | (mod x 4 == 0) && not(mod x 100 == 0) = False 
+    | (mod x 4 == 0) && (mod x 100 /= 0) = False 
     | otherwise = True
 
+-- elimina gli anni bisestili dalla lista
 listaNonBisestili :: [Int] -> [Int]
 listaNonBisestili = filter nonBisestile
