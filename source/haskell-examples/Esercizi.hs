@@ -17,11 +17,11 @@ listaMassimi' = map maximum
 -- senza usare la funzione map
 listaMassimiRic :: (Num a, Ord a) => [(a,a)] -> [a]
 listaMassimiRic [] = []
-listaMassimiRic (x:xs) = [massimo x] ++ listaMassimiRic xs
+listaMassimiRic (x:xs) = massimo x : listaMassimiRic xs
 
 -- solo ricorsione
 listaMassimiRic' :: (Num a, Ord a) => [(a,a)] -> [a]
 listaMassimiRic' [] = []
 listaMassimiRic' ((x,y):pairs) 
-    | x >= y = [x] ++ listaMassimiRic' pairs
-    | otherwise = [y] ++ listaMassimiRic' pairs
+    | x >= y = x : listaMassimiRic' pairs
+    | otherwise = y : listaMassimiRic' pairs
