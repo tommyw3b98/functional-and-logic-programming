@@ -28,6 +28,22 @@ listaMassimiRic' ((x,y):pairs)
 
 {- Esercizio 2 -}
 
+-- Media di una lista di numeri
 -- NB: la typeclass fractional serve per divisioni su numeri reali
+-- NB: fromIntegral casta il risultato di lenght (classe Integral) alla classe Num
 average :: (Fractional a) => [a] -> a
 average xs = sum xs / fromIntegral (length xs)
+
+{- Esercizio 3 -}
+
+-- dividi per 400, se resto 0 è bisestile
+-- altrimenti dividi per 4 e dividi per 100, se entrambe 0 è bisestile
+
+nonBisestile :: Int -> Bool
+nonBisestile x 
+    | mod x 400 == 0 = False
+    | (mod x 4 == 0) && not(mod x 100 == 0) = False 
+    | otherwise = True
+
+listaNonBisestili :: [Int] -> [Int]
+listaNonBisestili = filter nonBisestile
